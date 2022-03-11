@@ -1,0 +1,56 @@
+import java.io.*;
+import java.util.*;
+
+public class Main{
+  
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String exp = br.readLine();
+
+        Stack<Integer> vs = new Stack<>();
+        Stack<String> is = new Stack<>();
+        Stack<String> ps = new Stack<>();
+
+        for(int i = 0 ; i < exp.length() ; i++){
+            char ch = exp.charAt(i);
+            if(ch == '+' ||ch == '-' ||ch == '*' ||ch == '/' ){
+                int vsv2 = vs.pop();
+                int vsv1 = vs.pop();
+                int vsv = operation(vsv1,vsv2,ch);
+                vs.push(vsv);
+
+                String isv2 = is.pop();
+                String isv1 = is.pop();
+                String isv = "("+ isv1 +ch + isv2 +")";
+                is.push(isv);
+
+                String psv2 = ps.pop();
+                String psv1 = ps.pop();
+                String psv = ch + psv1 + psv2;
+                ps.push(psv);
+
+
+            }else{
+                vs.push(ch -'0');
+                is.push(ch + "");
+                ps.push(ch + "");
+            }
+        }
+        System.out.println(vs.pop());
+        System.out.println(is.pop());
+        System.out.println(ps.pop());
+
+    }
+    public static int operation(int v1 , int v2 , char op){
+        if(op == '+'){
+            return v1 + v2;
+        }else if(op == '-'){
+            return v1 - v2;
+        }else if(op == '*'){
+            return v1 * v2;
+        }else{
+            return v1 / v2 ;
+        }
+    }
+}
