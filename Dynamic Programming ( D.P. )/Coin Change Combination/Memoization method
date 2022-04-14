@@ -1,0 +1,46 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    
+    public static int mem(int n , int []coin , int amt , int idx , int [][] qb){
+        if(idx == n){
+            if(amt == 0){
+                return qb[idx][amt] = 1;
+            }else{
+                return qb[idx][amt] = 0;
+            }
+        }
+        if(qb[idx][amt] != 0){
+            return qb[idx][amt];
+        }
+        int ans = 0;
+        if(coin[idx] <= amt){
+            ans += mem(n , coin , amt - coin[idx] , idx , qb);
+        }
+        ans += mem(n , coin , amt , idx + 1 , qb);
+
+        return qb[idx][amt] = ans;
+
+    }
+
+    public static void main(String[] args) throws Exception {
+
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+
+        int [] noc = new int[n];
+
+        for(int i = 0 ; i < n ; i++){
+            noc[i] = scn.nextInt();
+        }
+
+        int amt = scn.nextInt();
+
+        // size of dp depends upon how meny variables are varying.
+        int [][] qb = new int[n + 1][amt + 1];
+
+        int ans = mem(n , noc , amt , 0 , qb);
+        System.out.println(ans);
+    }
+}
