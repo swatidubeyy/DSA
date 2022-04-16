@@ -1,0 +1,29 @@
+import java.io.*;
+import java.util.*;
+
+public class Main{
+
+public static void main(String[] args) throws Exception {
+    
+    Scanner scn = new Scanner(System.in);
+    long n = scn.nextLong();
+
+    long OldBuilding = 1;
+    long OldSpace = 1;
+
+    for(int i = 2 ; i <= n ; i++){
+        long NewBuilding = OldSpace;
+        long NewSpace = OldSpace + OldBuilding;
+
+        OldBuilding = NewBuilding;
+        OldSpace = NewSpace ;
+    }
+
+    long total = OldBuilding + OldSpace;
+    total = total * total;
+
+    System.out.println(total);
+
+ }
+
+}
