@@ -1,0 +1,89 @@
+//**********************************recursion*************************************
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static int rec(int n){
+        if(n == 1 || n == 0){
+            return 1;
+            
+        }
+        int snglPair = 0 , dblePair = 0;
+        if(n-2 >= 0){
+            snglPair = rec(n-1);
+            dblePair = (n-1) * rec(n-2);
+        }
+        return  snglPair+dblePair;
+
+    }
+
+    public static void main(String[] args) throws Exception {
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+
+        int ans = rec(n);
+        System.out.println(ans);
+    }
+
+}
+
+//**********************************memoization*************************************
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static int mem(int n , int[] qb){
+        if(n == 0 || n == 1){
+            return qb[n] =  1;
+        }
+        if(qb[n] != 0){
+            return qb[n];
+        }
+        int single = mem(n-1 , qb);
+        int pair = (n-1) * mem(n-2 , qb);
+
+        return qb[n] = single + pair ;
+    }
+    public static void main(String[] args) throws Exception {
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+        int ans = mem(n , new int[n + 1]);
+        System.out.println(ans);
+    }
+
+}
+
+//**********************************tabulation*************************************
+
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    
+    public static void main(String[] args) throws Exception {
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+        int dp[] = new int[n+1];
+
+        for(int i = 0 ; i <= n ; i++){
+            if(i == 0 || i == 1){
+                dp[i] =  1;
+                continue ;
+            }
+            
+            int single = dp[i-1];
+            int pair = (i-1) * dp[i-2];
+            dp[i] = single + pair ;
+        }
+
+        System.err.println(dp[n]);
+        
+    }
+
+}
+
+
