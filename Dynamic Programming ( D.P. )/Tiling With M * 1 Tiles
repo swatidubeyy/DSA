@@ -1,0 +1,90 @@
+//********************************recursive****************************
+
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static int rec(int n , int m){
+        if(n == 0 || n == 1){
+            return 1;
+        }
+        int h = 0 , v = 0;
+        if(n-m >= 0){
+            h = rec(n - m , m) * 1;
+        }
+        v = rec(n - 1 , m) * 1;
+        return v + h ;
+    }
+    public static void main(String[] args) throws Exception {
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+        int m = scn.nextInt();
+
+        int ans = rec(n , m);
+        System.out.println(ans);
+    }
+}
+
+//********************************memoization****************************
+
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static int mem(int n , int m , int []qb){
+        if(n == 0 || n == 1){
+            return 1;
+        }
+        if(qb[n] != 0){
+            return qb[n];
+        }
+        int h = 0 , v = 0;
+        if(n-m >= 0){
+            h = mem(n - m , m , qb) * 1;
+        }
+        v = mem(n - 1 , m , qb) * 1;
+        return qb[n] = v + h ;
+    }
+    public static void main(String[] args) throws Exception {
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+        int m = scn.nextInt();
+
+        int ans = mem(n , m , new int[n+1]);
+        System.out.println(ans);
+    }
+}
+
+
+//********************************Tabulation****************************
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+        int m = scn.nextInt();
+
+        int dp[] = new int[n + 1];
+        for(int i = 0 ; i <= n ; i++){
+
+            if(i == 0 || i == 1){
+                dp[i] = 1;
+                continue;
+            }
+            
+            int h = 0 , v = 0;
+            if(i-m >= 0){
+                h = dp[i-m] * 1;
+            }
+            v = dp[i-1] * 1;
+            dp[i] = v + h ;
+        }
+        System.out.println(dp[n]);
+    }
+}
