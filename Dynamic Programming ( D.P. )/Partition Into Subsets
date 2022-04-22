@@ -1,0 +1,113 @@
+*********************************Recursive**********************************
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+        
+    public static long partitionKSubset(int n, int k) {
+
+        if(n == 0 || k == 0 || k > n){
+            return 0;
+        }
+
+        if(n == k || k == 1){
+            return 1;
+        }
+        
+        long frstCall = k * partitionKSubset(n-1,k);
+        long scndCall = 1 * partitionKSubset(n-1,k-1);
+
+        return frstCall + scndCall;
+
+    }
+    
+    public static void main(String[] args) throws Exception {
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+        int k = scn.nextInt();
+        
+        long res = partitionKSubset(n, k);
+        System.out.println(res);
+    }
+}
+
+
+*********************************memoization**********************************
+
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+        
+    public static long partitionKSubset(int n, int k , long [][] qb) {
+
+        if(n == 0 || k == 0 || k > n){
+            return qb[n][k] = 0;
+        }
+
+        if(n == k || k == 1){
+            return qb[n][k] = 1;
+        }
+
+        if(qb[n][k] != 0){
+            return qb[n][k];
+        }
+        
+        long frstCall = k * partitionKSubset(n-1,k,qb);
+        long scndCall = 1 * partitionKSubset(n-1,k-1 , qb);
+
+        return qb[n][k] = frstCall + scndCall;
+
+    }
+    
+    public static void main(String[] args) throws Exception {
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+        int k = scn.nextInt();
+        
+        long qb[][] = new long[n+1][k+1];
+        long res = partitionKSubset(n, k , qb);
+        System.out.println(res);
+    }
+}
+
+
+*********************************Tabulation**********************************
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    
+    public static void main(String[] args) throws Exception {
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+        int k = scn.nextInt();
+        
+        long dp[][] = new long[n+1][k+1];
+
+        for(int i = 0 ; i <= n ; i++){
+            for(int j = 0 ; j <= k ; j++){
+                if(i == 0 || j == 0 || j > i){
+                    dp[i][k] = 0;
+                    continue;
+                }
+
+                if(i == j || j == 1){
+                    dp[i][j] = 1;
+                    continue ;
+                }
+
+                
+                long frstCall = j * dp[i-1][j];
+                long scndCall = 1 * dp[i-1][j-1];
+
+                dp[i][j] = frstCall + scndCall;
+            }
+        }
+
+        System.out.println(dp[n][k]);
+    }
+}
