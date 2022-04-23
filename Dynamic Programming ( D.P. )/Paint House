@@ -1,0 +1,32 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+
+        int [][] cost = new int[n][3];
+        for(int i = 0 ; i < n ; i++){
+            cost[i][0] = scn.nextInt();
+            cost[i][1] = scn.nextInt();
+            cost[i][2] = scn.nextInt();
+        }
+
+        int costRed = 0 , costBlue = 0 , CostGreen = 0;
+        for(int i = 0 ; i < n ; i++){
+            int nr = Math.min(costBlue , CostGreen) + cost[i][0];
+            int nb = Math.min(costRed , CostGreen) + cost[i][1];
+            int ng = Math.min(costBlue , costRed) + cost[i][2];
+            
+            costRed = nr;
+            costBlue = nb;
+            CostGreen = ng;
+        }
+
+        System.out.println(Math.min(costRed , Math.min(costBlue,CostGreen)));
+    }
+}
+
+
