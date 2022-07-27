@@ -1,3 +1,7 @@
+//******************************************************************************By Tabular Method*******************************************************************
+
+
+
 import java.io.*;
 import java.util.*;
 
@@ -27,3 +31,83 @@ public class Main {
     }
 
 }
+
+
+//*****************************************************************************By Recursion Method*****************************************************************************
+
+
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+
+        int []arr = new int[n];
+        for(int i = 0 ; i < n ; i++){
+            arr[i] = scn.nextInt();
+        }
+        int ans = climbStairsJumbRec(0 , arr  , n);
+        System.out.println(ans);
+    }
+
+    public static int climbStairsJumbRec(int idx ,int arr[] , int n){
+        if(idx == n){
+            return 1;
+        }
+        int ans = 0;
+        for(int i = 1 ; i <= arr[idx] ; i++){
+            if(idx+i <= n)
+                ans += climbStairsJumbRec(idx + i , arr , n);
+        }
+        return ans;
+    }
+}
+
+
+
+//*****************************************************************************By Memoization Method*****************************************************************************
+
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+
+        int []arr = new int[n];
+        for(int i = 0 ; i < n ; i++){
+            arr[i] = scn.nextInt();
+        }
+        int qb[] = new int[n+1];
+        Arrays.fill(qb , -1);             //  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<------------------------------------- Array method
+        int ans = climbStairsJumbMem(0 , arr  , n , qb);
+        System.out.println(ans);
+    }
+
+    public static int climbStairsJumbMem(int idx ,int arr[] , int n , int qb[] ){
+        if(idx == n){
+            return qb[idx] = 1;
+        }
+        if(qb[idx] != -1){
+            return qb[idx] ;
+        }
+        int ans = 0;
+        for(int i = 1 ; i <= arr[idx] ; i++){
+            if(idx+i <= n)
+                ans += climbStairsJumbMem(idx + i , arr , n , qb);
+        }
+        return qb[idx] = ans;
+    }
+
+}
+
+
+
+
