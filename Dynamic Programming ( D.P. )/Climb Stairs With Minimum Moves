@@ -1,3 +1,7 @@
+//*****************************************************************************Tabulation Method***************************************************************************
+
+
+
 import java.io.*;
 import java.util.*;
 
@@ -36,3 +40,100 @@ public class Main {
     }
 
 }
+
+
+
+
+//*****************************************************************************Recursion Method***************************************************************************
+
+
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+
+        int [] arr = new int[n];
+
+        for(int i = 0 ; i < n ; i++){
+            arr[i] = scn.nextInt();
+        }
+
+        int ans = climbStairMinMoveRec(0 , n , arr);
+        System.out.println(ans);
+    }
+
+    public static int climbStairMinMoveRec(int idx , int n , int[] arr){
+        if(idx == n){
+            return 0;
+        }
+
+        int ans = 0;
+        int min = Integer.MAX_VALUE;
+        for(int i = 1 ; i <= arr[idx] ; i++){
+            if(idx + i <= n){
+                min = Math.min(climbStairMinMoveRec(idx + i , n , arr), min);
+            }    
+        }
+        if(min != Integer.MAX_VALUE) 
+            min += 1; 
+        ans = min;
+        return ans; 
+    }
+}
+
+
+
+
+
+//*****************************************************************************Memoization Method***************************************************************************
+
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+
+        int [] arr = new int[n];
+
+        for(int i = 0 ; i < n ; i++){
+            arr[i] = scn.nextInt();
+        }
+
+        int ans = climbStairMinMoveMem(0 , n , arr , new int[n+1]);
+        System.out.println(ans);
+    }
+
+    public static int climbStairMinMoveMem(int idx , int n , int[] arr , int[] qb){
+        if(idx == n){
+            return 0;
+        }
+        if(qb[idx] != 0){
+            return qb[idx];
+        }
+        int ans = 0;
+        int min = Integer.MAX_VALUE;
+        for(int i = 1 ; i <= arr[idx] ; i++){
+            if(idx + i <= n){
+                min = Math.min(climbStairMinMoveMem(idx + i , n , arr , qb), min);
+            }    
+        }
+        if(min != Integer.MAX_VALUE) 
+            min += 1; 
+        ans = min;
+        return qb[idx] = ans; 
+    }
+}
+
+
+
