@@ -1,0 +1,27 @@
+class Solution
+{
+    public static int maxPathSum(Node root)
+    {
+        if(root.left != null && root.right != null){
+            int lh = maxPathSum(root.left);
+            int rh = maxPathSum(root.right);
+            int leftMax = Math.max(lh , 0);
+            int rightMax = Math.max(rh , 0);
+            
+            int maxnode = Math.max(leftMax , rightMax) + root.data;
+            
+            return maxnode;    
+        }else if(root.left != null){
+            int mn = maxPathSum(root.left);
+            int rightMax = Math.max(mn , 0);
+            return rightMax + root.data;    
+        }else if(root.right != null){
+            int mn = maxPathSum(root.right);
+            int leftMax = Math.max(mn , 0);
+            return leftMax + root.data;
+        }else{
+            return root.data;
+        }
+        
+    }
+}
